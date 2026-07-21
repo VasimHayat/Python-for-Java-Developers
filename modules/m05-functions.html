@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>M5. Control Flow &amp; Functions | Python for Java Developers</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+  <script src="../assets/tailwind-config.js"></script>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/themes/prism-tomorrow.min.css" rel="stylesheet">
+  <link href="../assets/course.css" rel="stylesheet">
+</head>
+<body data-root="../">
+<div class="shell">
+  <header class="topbar">
+    <div class="flex items-center gap-3">
+      <button class="icon-btn drawer-toggle" data-drawer aria-label="Open course navigation">Menu</button>
+      <a class="brand" href="../index.html">Python<span> for Java</span></a>
+    </div>
+    <div class="flex items-center gap-3">
+      <span class="muted hidden sm:inline" data-progress-text></span>
+      <button class="icon-btn" data-theme aria-label="Toggle theme">Theme</button>
+    </div>
+  </header>
+  <div class="mobile-dim"></div>
+
+  <main class="layout">
+    <aside class="sidebar panel">
+      <input class="search mb-3" data-search placeholder="Search modules and lessons">
+      <nav data-sidebar-list></nav>
+    </aside>
+    <article class="content">
+      <div class="module-head">
+        <div class="kicker">Module 5</div>
+        <h1>Control Flow &amp; Functions</h1>
+        <p class="muted">A Java-first bridge into the Python mental model, with runnable CPython 3.12 examples.</p>
+        <div class="progress-wrap mt-4"><div class="progress-bar" data-progress-bar></div></div>
+      </div>
+      <section class="lesson panel" id="lesson-1" data-lesson-id="m05-l1">
+      <div class="lesson-actions"><button class="complete-btn" data-complete type="button">Mark complete</button></div>
+      <h2>Functions are first-class configuration</h2>
+      <p class="thesis">Python often passes behavior directly instead of manufacturing strategy classes.</p>
+      <p class="muted">A Python function is an object with a name, attributes, and a type. That makes callbacks, key functions, decorators, and dependency injection lightweight. Reach for a class when you need state plus behavior, not just because Java would name an interface.</p>
+      <div class="compare"><div class="codebox java"><span class="chip">Java</span><pre><code class="language-java">users.sort(Comparator.comparing(User::lastName));</code></pre></div><div class="codebox python"><span class="chip">Python</span><pre><code class="language-python">users.sort(key=lambda user: user.last_name)</code></pre></div></div>
+      <div class="callout pythonic"><strong>Idiomatic Python</strong><div class="codebox python"><span class="chip">Python</span><pre><code class="language-python">def by_domain(email: str) -&gt; str:
+    return email.split(&quot;@&quot;, 1)[1]
+
+emails = [&quot;a@z.dev&quot;, &quot;b@example.com&quot;]
+print(sorted(emails, key=by_domain))</code></pre></div></div>
+      <div class="callout"><strong>Coming from Java:</strong> Unlearn creating a one-method class for every behavior slot. A function is already a good abstraction.</div>
+      
+      <h3 class="font-bold mt-4">Exercises</h3>
+      <details><summary>Sort by length</summary><div class="mt-2 muted">sorted(words, key=len)</div></details><details><summary>Pass a predicate</summary><div class="mt-2 muted">Write a function that accepts Callable[[str], bool].</div></details>
+    </section>
+<section class="lesson panel" id="lesson-2" data-lesson-id="m05-l2">
+      <div class="lesson-actions"><button class="complete-btn" data-complete type="button">Mark complete</button></div>
+      <h2>Defaults are evaluated once</h2>
+      <p class="thesis">Python default arguments are bound when the function is defined, not each time it is called.</p>
+      <p class="muted">Java defaulting usually happens inside the method body or through overloads. Python defaults live on the function object. Immutable defaults are fine; mutable defaults become shared state.</p>
+      <div class="compare"><div class="codebox java"><span class="chip">Java</span><pre><code class="language-java">void add(String value) {
+    List&lt;String&gt; items = new ArrayList&lt;&gt;();
+    items.add(value);
+}</code></pre></div><div class="codebox python"><span class="chip">Python</span><pre><code class="language-python">def add(value: str, items: list[str] | None = None) -&gt; list[str]:
+    if items is None:
+        items = []
+    items.append(value)
+    return items</code></pre></div></div>
+      <div class="callout pythonic"><strong>Idiomatic Python</strong><div class="codebox python"><span class="chip">Python</span><pre><code class="language-python">def append_tag(tag: str, tags: list[str] | None = None) -&gt; list[str]:
+    tags = [] if tags is None else tags
+    tags.append(tag)
+    return tags
+
+print(append_tag(&quot;fast&quot;))</code></pre></div></div>
+      <div class="callout"><strong>Coming from Java:</strong> Unlearn using [] or {} as a default unless shared state is exactly what you intend.</div>
+      <details><summary>Under the hood</summary><p class="mt-2 muted">Function default values are stored in func.__defaults__, which is why mutation persists.</p></details>
+      <h3 class="font-bold mt-4">Exercises</h3>
+      <details><summary>Spot the bug</summary><div class="mt-2 muted">def f(x, seen=[]): shares seen across calls.</div></details><details><summary>Use keyword-only</summary><div class="mt-2 muted">def connect(host: str, *, timeout: float = 3.0).</div></details>
+    </section>
+      <nav class="footer-nav"><a data-prev href="m04-data-structures.html">Previous: M4</a><a data-next href="m06-oop.html">Next: M6</a></nav>
+    </article>
+    <aside class="toc panel"><div class="kicker mb-2">On this page</div><nav data-toc></nav></aside>
+  </main>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/prism.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-java.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-python.min.js"></script>
+<script src="../assets/course.js"></script>
+</body>
+</html>

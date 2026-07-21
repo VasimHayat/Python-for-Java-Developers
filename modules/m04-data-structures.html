@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>M4. Built-in Data Structures | Python for Java Developers</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+  <script src="../assets/tailwind-config.js"></script>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/themes/prism-tomorrow.min.css" rel="stylesheet">
+  <link href="../assets/course.css" rel="stylesheet">
+</head>
+<body data-root="../">
+<div class="shell">
+  <header class="topbar">
+    <div class="flex items-center gap-3">
+      <button class="icon-btn drawer-toggle" data-drawer aria-label="Open course navigation">Menu</button>
+      <a class="brand" href="../index.html">Python<span> for Java</span></a>
+    </div>
+    <div class="flex items-center gap-3">
+      <span class="muted hidden sm:inline" data-progress-text></span>
+      <button class="icon-btn" data-theme aria-label="Toggle theme">Theme</button>
+    </div>
+  </header>
+  <div class="mobile-dim"></div>
+
+  <main class="layout">
+    <aside class="sidebar panel">
+      <input class="search mb-3" data-search placeholder="Search modules and lessons">
+      <nav data-sidebar-list></nav>
+    </aside>
+    <article class="content">
+      <div class="module-head">
+        <div class="kicker">Module 4</div>
+        <h1>Built-in Data Structures</h1>
+        <p class="muted">A Java-first bridge into the Python mental model, with runnable CPython 3.12 examples.</p>
+        <div class="progress-wrap mt-4"><div class="progress-bar" data-progress-bar></div></div>
+      </div>
+      <section class="lesson panel" id="lesson-1" data-lesson-id="m04-l1">
+      <div class="lesson-actions"><button class="complete-btn" data-complete type="button">Mark complete</button></div>
+      <h2>Collections are protocols plus literals</h2>
+      <p class="thesis">Python&#x27;s core collections are built into the language&#x27;s syntax and idioms.</p>
+      <p class="muted">Lists, dicts, sets, and tuples cover much of what Java developers reach for with collection classes. The important shift is operations: slicing, membership, unpacking, and comprehensions are normal code, not clever code.</p>
+      <div class="compare"><div class="codebox java"><span class="chip">Java</span><pre><code class="language-java">Map&lt;String, Integer&gt; counts = new HashMap&lt;&gt;();
+counts.merge(&quot;ok&quot;, 1, Integer::sum);</code></pre></div><div class="codebox python"><span class="chip">Python</span><pre><code class="language-python">counts: dict[str, int] = {}
+counts[&quot;ok&quot;] = counts.get(&quot;ok&quot;, 0) + 1</code></pre></div></div>
+      <div class="callout pythonic"><strong>Idiomatic Python</strong><div class="codebox python"><span class="chip">Python</span><pre><code class="language-python">names = [&quot;ada&quot;, &quot;grace&quot;, &quot;guido&quot;]
+initials = {name[0].upper() for name in names}
+index = {name: len(name) for name in names}
+print(initials, index)</code></pre></div></div>
+      <div class="callout"><strong>Coming from Java:</strong> Unlearn creating wrapper classes for every small mapping. A plain dict with clear names is often the Pythonic domain object at the boundary.</div>
+      <details><summary>Under the hood</summary><p class="mt-2 muted">dict preserves insertion order as a language guarantee in Python 3.7+. Do not rely on hash-table ordering semantics beyond that guarantee.</p></details>
+      <h3 class="font-bold mt-4">Exercises</h3>
+      <details><summary>Count words</summary><div class="mt-2 muted">Use collections.Counter for a list of words.</div></details><details><summary>Slice safely</summary><div class="mt-2 muted">Show names[:2] and names[-1].</div></details>
+    </section>
+<section class="lesson panel" id="lesson-2" data-lesson-id="m04-l2">
+      <div class="lesson-actions"><button class="complete-btn" data-complete type="button">Mark complete</button></div>
+      <h2>Comprehensions beat most stream pipelines</h2>
+      <p class="thesis">Python comprehensions are the local, readable form of map/filter/collect.</p>
+      <p class="muted">Java Streams make collection transforms fluent. Python comprehensions keep the shape close to the data. Use them for straightforward transforms and switch to generator expressions when you want laziness.</p>
+      <div class="compare"><div class="codebox java"><span class="chip">Java</span><pre><code class="language-java">List&lt;String&gt; shortNames = names.stream()
+    .filter(n -&gt; n.length() &lt; 5)
+    .map(String::toUpperCase)
+    .toList();</code></pre></div><div class="codebox python"><span class="chip">Python</span><pre><code class="language-python">short_names = [n.upper() for n in names if len(n) &lt; 5]</code></pre></div></div>
+      <div class="callout pythonic"><strong>Idiomatic Python</strong><div class="codebox python"><span class="chip">Python</span><pre><code class="language-python">names = [&quot;ada&quot;, &quot;grace&quot;, &quot;guido&quot;]
+total = sum(len(n) for n in names if &quot;a&quot; in n)
+print(total)</code></pre></div></div>
+      <div class="callout"><strong>Coming from Java:</strong> Unlearn turning every transform into chained method calls. Python&#x27;s for expression is the idiom.</div>
+      
+      <h3 class="font-bold mt-4">Exercises</h3>
+      <details><summary>Convert stream</summary><div class="mt-2 muted">Translate filter/map/toList to a list comprehension.</div></details><details><summary>Make it lazy</summary><div class="mt-2 muted">Use (expr for item in items) inside sum().</div></details>
+    </section>
+      <nav class="footer-nav"><a data-prev href="m03-types.html">Previous: M3</a><a data-next href="m05-functions.html">Next: M5</a></nav>
+    </article>
+    <aside class="toc panel"><div class="kicker mb-2">On this page</div><nav data-toc></nav></aside>
+  </main>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/prism.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-java.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-python.min.js"></script>
+<script src="../assets/course.js"></script>
+</body>
+</html>

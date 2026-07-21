@@ -1,0 +1,208 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>M6. OOP the Python Way | Python for Java Developers</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+  <script src="../assets/tailwind-config.js"></script>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/themes/prism-tomorrow.min.css" rel="stylesheet">
+  <link href="../assets/course.css" rel="stylesheet">
+</head>
+<body data-root="../">
+<div class="shell">
+  <header class="topbar">
+    <div class="flex items-center gap-3">
+      <button class="icon-btn drawer-toggle" data-drawer aria-label="Open course navigation">Menu</button>
+      <a class="brand" href="../index.html">Python<span> for Java</span></a>
+    </div>
+    <div class="flex items-center gap-3">
+      <span class="muted hidden sm:inline" data-progress-text></span>
+      <button class="icon-btn" data-theme aria-label="Toggle theme">Theme</button>
+    </div>
+  </header>
+  <div class="mobile-dim"></div>
+
+  <main class="layout">
+    <aside class="sidebar panel">
+      <input class="search mb-3" data-search placeholder="Search modules and lessons">
+      <nav data-sidebar-list></nav>
+    </aside>
+    <article class="content">
+      <div class="module-head">
+        <div class="kicker">Module 6</div>
+        <h1>OOP the Python Way</h1>
+        <p class="muted">A Java-first bridge into the Python mental model, with runnable CPython 3.12 examples.</p>
+        <div class="progress-wrap mt-4"><div class="progress-bar" data-progress-bar></div></div>
+      </div>
+      <section class="lesson panel" id="lesson-1" data-lesson-id="m06-l1">
+      <div class="lesson-actions"><button class="complete-btn" data-complete type="button">Mark complete</button></div>
+      <h2>Classes without Java ceremony</h2>
+      <p class="thesis">A Python class is a namespace plus behavior; it does not need fields declared up front.</p>
+      <p class="muted">Java asks you to declare structure before use. Python lets __init__ bind instance attributes directly. The tradeoff is social and tooling discipline: clear constructors, type hints, dataclasses, and tests replace compiler-enforced field declarations.</p>
+      <div class="compare"><div class="codebox java"><span class="chip">Java</span><pre><code class="language-java">public final class Money {
+    private final String currency;
+    private final int cents;
+
+    public Money(String currency, int cents) {
+        this.currency = currency;
+        this.cents = cents;
+    }
+}</code></pre></div><div class="codebox python"><span class="chip">Python</span><pre><code class="language-python">class Money:
+    def __init__(self, currency: str, cents: int) -&gt; None:
+        self.currency = currency
+        self.cents = cents</code></pre></div></div>
+      <div class="callout pythonic"><strong>Idiomatic Python</strong><div class="codebox python"><span class="chip">Python</span><pre><code class="language-python">class Money:
+    def __init__(self, currency: str, cents: int) -&gt; None:
+        if cents &lt; 0:
+            raise ValueError(&quot;cents must be non-negative&quot;)
+        self.currency = currency
+        self.cents = cents
+
+    def format(self) -&gt; str:
+        return f&quot;{self.currency} {self.cents / 100:.2f}&quot;
+
+print(Money(&quot;USD&quot;, 1299).format())</code></pre></div></div>
+      <div class="callout"><strong>Coming from Java:</strong> Unlearn writing JavaBean boilerplate. Python does not reward a file full of get_currency and set_currency methods.</div>
+      <details><summary>Under the hood</summary><p class="mt-2 muted">Attribute lookup checks the instance, then class, then base classes according to the method resolution order.</p></details>
+      <h3 class="font-bold mt-4">Exercises</h3>
+      <details><summary>Add validation</summary><div class="mt-2 muted">Reject a blank currency in __init__.</div></details><details><summary>Add behavior</summary><div class="mt-2 muted">Implement add(self, other) and require matching currencies.</div></details>
+    </section>
+<section class="lesson panel" id="lesson-2" data-lesson-id="m06-l2">
+      <div class="lesson-actions"><button class="complete-btn" data-complete type="button">Mark complete</button></div>
+      <h2>Properties replace getters and setters</h2>
+      <p class="thesis">Python exposes attributes first and adds managed access later without changing callers.</p>
+      <p class="muted">In Java, encapsulation often means private fields plus accessors from day one. In Python, public attributes are normal. If validation or computed behavior appears later, @property preserves the attribute syntax.</p>
+      <div class="compare"><div class="codebox java"><span class="chip">Java</span><pre><code class="language-java">public int getCents() { return cents; }
+public void setCents(int cents) {
+    if (cents &lt; 0) throw new IllegalArgumentException();
+    this.cents = cents;
+}</code></pre></div><div class="codebox python"><span class="chip">Python</span><pre><code class="language-python">class Invoice:
+    @property
+    def total(self) -&gt; int:
+        return self._total</code></pre></div></div>
+      <div class="callout pythonic"><strong>Idiomatic Python</strong><div class="codebox python"><span class="chip">Python</span><pre><code class="language-python">class Account:
+    def __init__(self, balance: int) -&gt; None:
+        self.balance = balance
+
+    @property
+    def balance(self) -&gt; int:
+        return self._balance
+
+    @balance.setter
+    def balance(self, value: int) -&gt; None:
+        if value &lt; 0:
+            raise ValueError(&quot;balance cannot be negative&quot;)
+        self._balance = value
+
+acct = Account(10)
+acct.balance += 5
+print(acct.balance)</code></pre></div></div>
+      <div class="callout"><strong>Coming from Java:</strong> Unlearn defensive accessor generation. Start with attributes; upgrade to properties when there is a reason.</div>
+      <details><summary>Under the hood</summary><p class="mt-2 muted">property is a descriptor: its __get__ and __set__ methods participate in normal attribute lookup.</p></details>
+      <h3 class="font-bold mt-4">Exercises</h3>
+      <details><summary>Make read-only</summary><div class="mt-2 muted">Define only @property and no setter.</div></details><details><summary>Computed property</summary><div class="mt-2 muted">Add dollars returning cents / 100.</div></details>
+    </section>
+<section class="lesson panel" id="lesson-3" data-lesson-id="m06-l3">
+      <div class="lesson-actions"><button class="complete-btn" data-complete type="button">Mark complete</button></div>
+      <h2>Protocols and dunder methods</h2>
+      <p class="thesis">Python polymorphism is usually behavioral: if an object supports the operation, it fits.</p>
+      <p class="muted">Java formalizes contracts through interfaces. Python formalizes many contracts through special methods such as __len__, __iter__, __eq__, and __enter__. Static typing can express this with Protocol, but runtime code typically just performs the operation.</p>
+      <div class="compare"><div class="codebox java"><span class="chip">Java</span><pre><code class="language-java">interface Priced {
+    int cents();
+}
+int total(List&lt;? extends Priced&gt; items) { ... }</code></pre></div><div class="codebox python"><span class="chip">Python</span><pre><code class="language-python">from typing import Protocol
+
+class Priced(Protocol):
+    cents: int</code></pre></div></div>
+      <div class="callout pythonic"><strong>Idiomatic Python</strong><div class="codebox python"><span class="chip">Python</span><pre><code class="language-python">from dataclasses import dataclass
+
+@dataclass(frozen=True)
+class Money:
+    cents: int
+
+    def __add__(self, other: &quot;Money&quot;) -&gt; &quot;Money&quot;:
+        return Money(self.cents + other.cents)
+
+print(Money(5) + Money(7))</code></pre></div></div>
+      <div class="callout"><strong>Coming from Java:</strong> Unlearn asking where the interface file is. The more Pythonic question is which operation the caller needs.</div>
+      <details><summary>Under the hood</summary><p class="mt-2 muted">Dunder methods are looked up on the type for many operations, which is why monkey-patching them on one instance rarely works.</p></details>
+      <h3 class="font-bold mt-4">Exercises</h3>
+      <details><summary>Add equality</summary><div class="mt-2 muted">Use dataclass or implement __eq__.</div></details><details><summary>Create a protocol</summary><div class="mt-2 muted">Define a SizedNamed Protocol with name and __len__.</div></details>
+    </section>
+<section class="lesson panel" id="lesson-4" data-lesson-id="m06-l4">
+      <div class="lesson-actions"><button class="complete-btn" data-complete type="button">Mark complete</button></div>
+      <h2>Class methods, static methods, and alternate constructors</h2>
+      <p class="thesis">Python class methods receive the class object and are ideal for named constructors.</p>
+      <p class="muted">Java often uses overloaded constructors, static factories, or builders. Python has no overloads by signature. Use clear classmethod constructors, module functions, or dataclasses instead of factory hierarchies.</p>
+      <div class="compare"><div class="codebox java"><span class="chip">Java</span><pre><code class="language-java">public static Money dollars(int dollars) {
+    return new Money(&quot;USD&quot;, dollars * 100);
+}</code></pre></div><div class="codebox python"><span class="chip">Python</span><pre><code class="language-python">class Money:
+    @classmethod
+    def dollars(cls, amount: int) -&gt; &quot;Money&quot;:
+        return cls(&quot;USD&quot;, amount * 100)</code></pre></div></div>
+      <div class="callout pythonic"><strong>Idiomatic Python</strong><div class="codebox python"><span class="chip">Python</span><pre><code class="language-python">class Money:
+    def __init__(self, currency: str, cents: int) -&gt; None:
+        self.currency = currency
+        self.cents = cents
+
+    @classmethod
+    def from_decimal(cls, currency: str, text: str) -&gt; &quot;Money&quot;:
+        whole, _, frac = text.partition(&quot;.&quot;)
+        return cls(currency, int(whole) * 100 + int((frac + &quot;00&quot;)[:2]))
+
+print(Money.from_decimal(&quot;USD&quot;, &quot;12.30&quot;).cents)</code></pre></div></div>
+      <div class="callout"><strong>Coming from Java:</strong> Unlearn building AbstractFactory layers before plain constructors and named constructors have failed.</div>
+      
+      <h3 class="font-bold mt-4">Exercises</h3>
+      <details><summary>Add from_dollars</summary><div class="mt-2 muted">Return cls(&#x27;USD&#x27;, dollars * 100).</div></details><details><summary>Choose staticmethod</summary><div class="mt-2 muted">Use it only when the function belongs near the class but needs neither self nor cls.</div></details>
+    </section>
+<section class="lesson panel" id="lesson-5" data-lesson-id="m06-l5">
+      <div class="lesson-actions"><button class="complete-btn" data-complete type="button">Mark complete</button></div>
+      <h2>Multiple inheritance and MRO</h2>
+      <p class="thesis">Python supports multiple inheritance, but cooperative design matters more than clever hierarchy.</p>
+      <p class="muted">Java avoids multiple implementation inheritance and uses interfaces. Python allows it and resolves methods with C3 linearization. Mixins can be useful when they are small, stateless, and cooperative with super(). Deep hierarchies are still a smell.</p>
+      <div class="compare"><div class="codebox java"><span class="chip">Java</span><pre><code class="language-java">class Service implements Auditable, Cacheable {
+    // Java composes most behavior explicitly.
+}</code></pre></div><div class="codebox python"><span class="chip">Python</span><pre><code class="language-python">class JsonMixin:
+    def as_json(self) -&gt; str:
+        return &quot;{}&quot;
+
+class Report(JsonMixin):
+    pass</code></pre></div></div>
+      <div class="callout pythonic"><strong>Idiomatic Python</strong><div class="codebox python"><span class="chip">Python</span><pre><code class="language-python">class A:
+    def ping(self) -&gt; list[str]:
+        return [&quot;A&quot;]
+
+class B(A):
+    def ping(self) -&gt; list[str]:
+        return [&quot;B&quot;, *super().ping()]
+
+class C(A):
+    def ping(self) -&gt; list[str]:
+        return [&quot;C&quot;, *super().ping()]
+
+class D(B, C):
+    pass
+
+print(D().ping())
+print([cls.__name__ for cls in D.mro()])</code></pre></div></div>
+      <div class="callout"><strong>Coming from Java:</strong> Unlearn using inheritance as the first reuse tool. Composition, functions, and small protocols usually age better.</div>
+      <details><summary>Under the hood</summary><p class="mt-2 muted">C3 linearization preserves local precedence order and monotonicity, preventing ambiguous parent ordering.</p></details>
+      <h3 class="font-bold mt-4">Exercises</h3>
+      <details><summary>Inspect MRO</summary><div class="mt-2 muted">Print D.mro() for a diamond hierarchy.</div></details><details><summary>Write a mixin</summary><div class="mt-2 muted">Create a ReprMixin that assumes an as_dict method.</div></details>
+    </section>
+      <nav class="footer-nav"><a data-prev href="m05-functions.html">Previous: M5</a><a data-next href="m07-dataclasses.html">Next: M7</a></nav>
+    </article>
+    <aside class="toc panel"><div class="kicker mb-2">On this page</div><nav data-toc></nav></aside>
+  </main>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/prism.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-java.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-python.min.js"></script>
+<script src="../assets/course.js"></script>
+</body>
+</html>

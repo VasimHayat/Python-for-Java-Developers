@@ -1,0 +1,105 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>M19. Packaging &amp; Distribution | Python for Java Developers</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+  <script src="../assets/tailwind-config.js"></script>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/themes/prism-tomorrow.min.css" rel="stylesheet">
+  <link href="../assets/course.css" rel="stylesheet">
+</head>
+<body data-root="../">
+<div class="shell">
+  <header class="topbar">
+    <div class="flex items-center gap-3">
+      <button class="icon-btn drawer-toggle" data-drawer aria-label="Open course navigation">Menu</button>
+      <a class="brand" href="../index.html">Python<span> for Java</span></a>
+    </div>
+    <div class="flex items-center gap-3">
+      <span class="muted hidden sm:inline" data-progress-text></span>
+      <button class="icon-btn" data-theme aria-label="Toggle theme">Theme</button>
+    </div>
+  </header>
+  <div class="mobile-dim"></div>
+
+  <main class="layout">
+    <aside class="sidebar panel">
+      <input class="search mb-3" data-search placeholder="Search modules and lessons">
+      <nav data-sidebar-list></nav>
+    </aside>
+    <article class="content">
+      <div class="module-head">
+        <div class="kicker">Module 19</div>
+        <h1>Packaging &amp; Distribution</h1>
+        <p class="muted">A Java-first bridge into the Python mental model, with runnable CPython 3.12 examples.</p>
+        <div class="progress-wrap mt-4"><div class="progress-bar" data-progress-bar></div></div>
+      </div>
+      <section class="lesson panel" id="lesson-1" data-lesson-id="m19-l1">
+      <div class="lesson-actions"><button class="complete-btn" data-complete type="button">Mark complete</button></div>
+      <h2>Wheels are the distribution unit</h2>
+      <p class="thesis">Wheels are the distribution unit</p>
+      <p class="muted">pyproject.toml, wheels, and pins form the packaging discipline Java developers expect from builds.</p>
+      <div class="compare"><div class="codebox java"><span class="chip">Java</span><pre><code class="language-java">// Java-shaped baseline
+var items = List.of(&quot;ada&quot;, &quot;grace&quot;, &quot;guido&quot;);
+var result = items.stream()
+    .filter(s -&gt; s.length() &gt; 3)
+    .map(String::toUpperCase)
+    .toList();</code></pre></div><div class="codebox python"><span class="chip">Python</span><pre><code class="language-python"># pyproject.toml declares package metadata; Python code
+# can still expose a normal console entry function.
+def main() -&gt; None:
+    print(&quot;acme-tool 0.1.0&quot;)
+
+main()</code></pre></div></div>
+      <div class="callout pythonic"><strong>Idiomatic Python</strong><div class="codebox python"><span class="chip">Python</span><pre><code class="language-python"># Build with:
+# python -m pip install build
+# python -m build
+
+def main() -&gt; None:
+    print(&quot;console entry point&quot;)</code></pre></div></div>
+      <div class="callout"><strong>Coming from Java:</strong> Unlearn translating Java structure one-to-one. Preserve the intent, then choose the Python mechanism that makes that intent smallest and clearest.</div>
+      
+      <h3 class="font-bold mt-4">Exercises</h3>
+      <details><summary>Refactor the Java shape</summary><div class="mt-2 muted">Rewrite the shown Java-shaped code in the smallest idiomatic Python form.</div></details><details><summary>Add types where useful</summary><div class="mt-2 muted">Annotate public function boundaries, but avoid noisy local annotations.</div></details>
+    </section>
+<section class="lesson panel" id="lesson-2" data-lesson-id="m19-l2">
+      <div class="lesson-actions"><button class="complete-btn" data-complete type="button">Mark complete</button></div>
+      <h2>Naive translation vs Pythonic design</h2>
+      <p class="thesis">Correct Python can still be Java wearing Python syntax.</p>
+      <p class="muted">The expert move is not merely making code run. It is removing patterns Python does not need: manager classes with no state, premature interfaces, getter/setter grids, LBYL checks before every operation, and stream-shaped code where a comprehension says the same thing.</p>
+      <div class="compare"><div class="codebox java"><span class="chip">Java</span><pre><code class="language-java">// Java-shaped baseline
+var items = List.of(&quot;ada&quot;, &quot;grace&quot;, &quot;guido&quot;);
+var result = items.stream()
+    .filter(s -&gt; s.length() &gt; 3)
+    .map(String::toUpperCase)
+    .toList();</code></pre></div><div class="codebox python"><span class="chip">Python</span><pre><code class="language-python"># pyproject.toml declares package metadata; Python code
+# can still expose a normal console entry function.
+def main() -&gt; None:
+    print(&quot;acme-tool 0.1.0&quot;)
+
+main()</code></pre></div></div>
+      <div class="callout pythonic"><strong>Idiomatic Python</strong><div class="codebox python"><span class="chip">Python</span><pre><code class="language-python"># Build with:
+# python -m pip install build
+# python -m build
+
+def main() -&gt; None:
+    print(&quot;console entry point&quot;)</code></pre></div></div>
+      <div class="callout"><strong>Coming from Java:</strong> Unlearn ceremony as proof of seriousness. In Python, boring direct code is usually the senior choice.</div>
+      
+      <h3 class="font-bold mt-4">Exercises</h3>
+      <details><summary>Find a smell</summary><div class="mt-2 muted">Identify one needless class or abstraction in a Java-style design.</div></details><details><summary>Make it boring</summary><div class="mt-2 muted">Replace it with a function, dataclass, dict, or Protocol as appropriate.</div></details>
+    </section>
+      <nav class="footer-nav"><a data-prev href="m18-testing.html">Previous: M18</a><a data-next href="m20-web-backends.html">Next: M20</a></nav>
+    </article>
+    <aside class="toc panel"><div class="kicker mb-2">On this page</div><nav data-toc></nav></aside>
+  </main>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/prism.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-java.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-python.min.js"></script>
+<script src="../assets/course.js"></script>
+</body>
+</html>

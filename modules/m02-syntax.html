@@ -1,0 +1,98 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>M2. Syntax &amp; Execution Model | Python for Java Developers</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+  <script src="../assets/tailwind-config.js"></script>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/themes/prism-tomorrow.min.css" rel="stylesheet">
+  <link href="../assets/course.css" rel="stylesheet">
+</head>
+<body data-root="../">
+<div class="shell">
+  <header class="topbar">
+    <div class="flex items-center gap-3">
+      <button class="icon-btn drawer-toggle" data-drawer aria-label="Open course navigation">Menu</button>
+      <a class="brand" href="../index.html">Python<span> for Java</span></a>
+    </div>
+    <div class="flex items-center gap-3">
+      <span class="muted hidden sm:inline" data-progress-text></span>
+      <button class="icon-btn" data-theme aria-label="Toggle theme">Theme</button>
+    </div>
+  </header>
+  <div class="mobile-dim"></div>
+
+  <main class="layout">
+    <aside class="sidebar panel">
+      <input class="search mb-3" data-search placeholder="Search modules and lessons">
+      <nav data-sidebar-list></nav>
+    </aside>
+    <article class="content">
+      <div class="module-head">
+        <div class="kicker">Module 2</div>
+        <h1>Syntax &amp; Execution Model</h1>
+        <p class="muted">A Java-first bridge into the Python mental model, with runnable CPython 3.12 examples.</p>
+        <div class="progress-wrap mt-4"><div class="progress-bar" data-progress-bar></div></div>
+      </div>
+      <section class="lesson panel" id="lesson-1" data-lesson-id="m02-l1">
+      <div class="lesson-actions"><button class="complete-btn" data-complete type="button">Mark complete</button></div>
+      <h2>Indentation, truthiness, and identity</h2>
+      <p class="thesis">Python syntax removes braces but makes whitespace and object identity semantically visible.</p>
+      <p class="muted">Blocks are indentation. Truthiness is protocol-driven: empty collections, zero, None, and False are falsey. Use == for value equality and is only for identity singletons such as None.</p>
+      <div class="compare"><div class="codebox java"><span class="chip">Java</span><pre><code class="language-java">String s = new String(&quot;x&quot;);
+if (s.equals(&quot;x&quot;)) {
+    System.out.println(&quot;value&quot;);
+}</code></pre></div><div class="codebox python"><span class="chip">Python</span><pre><code class="language-python">s = &quot;&quot;.join([&quot;x&quot;])
+if s == &quot;x&quot;:
+    print(&quot;value&quot;)
+if s is not None:
+    print(&quot;bound&quot;)</code></pre></div></div>
+      <div class="callout pythonic"><strong>Idiomatic Python</strong><div class="codebox python"><span class="chip">Python</span><pre><code class="language-python">items: list[str] = []
+if not items:
+    print(&quot;empty&quot;)
+
+sentinel = object()
+value = sentinel
+print(value is sentinel)</code></pre></div></div>
+      <div class="callout"><strong>Coming from Java:</strong> Unlearn using identity as a cheap equality test. Python may intern some objects, but that is not your contract.</div>
+      <details><summary>Under the hood</summary><p class="mt-2 muted">Names are bindings to objects. Assignment never copies an object unless code explicitly creates a copy.</p></details>
+      <h3 class="font-bold mt-4">Exercises</h3>
+      <details><summary>Fix identity misuse</summary><div class="mt-2 muted">Replace x is 1000 with x == 1000.</div></details><details><summary>Use truthiness</summary><div class="mt-2 muted">Write if not errors: instead of if len(errors) == 0:.</div></details>
+    </section>
+<section class="lesson panel" id="lesson-2" data-lesson-id="m02-l2">
+      <div class="lesson-actions"><button class="complete-btn" data-complete type="button">Mark complete</button></div>
+      <h2>Imports execute modules</h2>
+      <p class="thesis">Importing a Python module runs its top-level code exactly once per interpreter process.</p>
+      <p class="muted">Java class loading can initialize static state, but Python makes the file execution model more obvious. Top-level code should define constants, functions, and classes. Put side effects behind main() or functions.</p>
+      <div class="compare"><div class="codebox java"><span class="chip">Java</span><pre><code class="language-java">public final class Config {
+    static final int PORT = 8080;
+}</code></pre></div><div class="codebox python"><span class="chip">Python</span><pre><code class="language-python"># config.py
+PORT = 8080
+
+def describe() -&gt; str:
+    return f&quot;port={PORT}&quot; </code></pre></div></div>
+      <div class="callout pythonic"><strong>Idiomatic Python</strong><div class="codebox python"><span class="chip">Python</span><pre><code class="language-python">def main() -&gt; None:
+    print(&quot;only when executed as a script&quot;)
+
+if __name__ == &quot;__main__&quot;:
+    main()</code></pre></div></div>
+      <div class="callout"><strong>Coming from Java:</strong> Unlearn treating imports as declarations only. A slow database call at module import time hurts every importer.</div>
+      
+      <h3 class="font-bold mt-4">Exercises</h3>
+      <details><summary>Add a main guard</summary><div class="mt-2 muted">Move print or network side effects under if __name__ == &#x27;__main__&#x27;.</div></details><details><summary>Predict output</summary><div class="mt-2 muted">If module a imports b twice, b top-level code runs once because sys.modules caches it.</div></details>
+    </section>
+      <nav class="footer-nav"><a data-prev href="m01-setup.html">Previous: M1</a><a data-next href="m03-types.html">Next: M3</a></nav>
+    </article>
+    <aside class="toc panel"><div class="kicker mb-2">On this page</div><nav data-toc></nav></aside>
+  </main>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/prism.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-java.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-python.min.js"></script>
+<script src="../assets/course.js"></script>
+</body>
+</html>

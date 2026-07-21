@@ -1,0 +1,88 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>M3. The Type System | Python for Java Developers</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+  <script src="../assets/tailwind-config.js"></script>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/themes/prism-tomorrow.min.css" rel="stylesheet">
+  <link href="../assets/course.css" rel="stylesheet">
+</head>
+<body data-root="../">
+<div class="shell">
+  <header class="topbar">
+    <div class="flex items-center gap-3">
+      <button class="icon-btn drawer-toggle" data-drawer aria-label="Open course navigation">Menu</button>
+      <a class="brand" href="../index.html">Python<span> for Java</span></a>
+    </div>
+    <div class="flex items-center gap-3">
+      <span class="muted hidden sm:inline" data-progress-text></span>
+      <button class="icon-btn" data-theme aria-label="Toggle theme">Theme</button>
+    </div>
+  </header>
+  <div class="mobile-dim"></div>
+
+  <main class="layout">
+    <aside class="sidebar panel">
+      <input class="search mb-3" data-search placeholder="Search modules and lessons">
+      <nav data-sidebar-list></nav>
+    </aside>
+    <article class="content">
+      <div class="module-head">
+        <div class="kicker">Module 3</div>
+        <h1>The Type System</h1>
+        <p class="muted">A Java-first bridge into the Python mental model, with runnable CPython 3.12 examples.</p>
+        <div class="progress-wrap mt-4"><div class="progress-bar" data-progress-bar></div></div>
+      </div>
+      <section class="lesson panel" id="lesson-1" data-lesson-id="m03-l1">
+      <div class="lesson-actions"><button class="complete-btn" data-complete type="button">Mark complete</button></div>
+      <h2>Gradual typing, not Java typing with fewer keywords</h2>
+      <p class="thesis">Type hints describe intent for tools; CPython does not enforce them at runtime.</p>
+      <p class="muted">Python&#x27;s type system is dynamic and duck-typed. Hints let pyright or mypy catch many errors, but runtime behavior still follows objects and protocols. Treat hints as executable documentation for humans and static analyzers.</p>
+      <div class="compare"><div class="codebox java"><span class="chip">Java</span><pre><code class="language-java">List&lt;String&gt; names = List.of(&quot;Ada&quot;, &quot;Guido&quot;);
+String first = names.getFirst();</code></pre></div><div class="codebox python"><span class="chip">Python</span><pre><code class="language-python">names: list[str] = [&quot;Ada&quot;, &quot;Guido&quot;]
+first: str = names[0]</code></pre></div></div>
+      <div class="callout pythonic"><strong>Idiomatic Python</strong><div class="codebox python"><span class="chip">Python</span><pre><code class="language-python">from collections.abc import Iterable
+
+def total_lengths(names: Iterable[str]) -&gt; int:
+    return sum(len(name) for name in names)
+
+print(total_lengths([&quot;Ada&quot;, &quot;Guido&quot;]))</code></pre></div></div>
+      <div class="callout"><strong>Coming from Java:</strong> Unlearn believing the annotation makes a runtime guarantee. Validate external input; annotate internal contracts.</div>
+      <details><summary>Under the hood</summary><p class="mt-2 muted">Since Python 3.9, built-in generics like list[int] are standard. Use from __future__ import annotations only when you need postponed evaluation patterns.</p></details>
+      <h3 class="font-bold mt-4">Exercises</h3>
+      <details><summary>Add a union</summary><div class="mt-2 muted">Use str | None for a value that may be absent.</div></details><details><summary>Prefer protocols</summary><div class="mt-2 muted">Accept Iterable[str] when you only iterate, not list[str].</div></details>
+    </section>
+<section class="lesson panel" id="lesson-2" data-lesson-id="m03-l2">
+      <div class="lesson-actions"><button class="complete-btn" data-complete type="button">Mark complete</button></div>
+      <h2>None is not Optional</h2>
+      <p class="thesis">Optional means the value may be None; it does not mean the parameter is optional.</p>
+      <p class="muted">Java Optional is a wrapper. Python uses None directly for absence, and defaults determine whether an argument can be omitted. A parameter typed str | None but lacking a default is still required.</p>
+      <div class="compare"><div class="codebox java"><span class="chip">Java</span><pre><code class="language-java">Optional&lt;String&gt; nickname = Optional.empty();
+String label = nickname.orElse(&quot;anonymous&quot;);</code></pre></div><div class="codebox python"><span class="chip">Python</span><pre><code class="language-python">nickname: str | None = None
+label = nickname if nickname is not None else &quot;anonymous&quot; </code></pre></div></div>
+      <div class="callout pythonic"><strong>Idiomatic Python</strong><div class="codebox python"><span class="chip">Python</span><pre><code class="language-python">def greet(name: str | None = None) -&gt; str:
+    display = name if name is not None else &quot;anonymous&quot;
+    return f&quot;Hello, {display}&quot;
+
+print(greet())</code></pre></div></div>
+      <div class="callout"><strong>Coming from Java:</strong> Unlearn wrapping absence just to look explicit. Python&#x27;s explicitness is in the branch, not an Optional container.</div>
+      
+      <h3 class="font-bold mt-4">Exercises</h3>
+      <details><summary>Required nullable</summary><div class="mt-2 muted">Write def load(path: str | None) -&gt; bytes: when caller must pass a value, even None.</div></details><details><summary>Default absent</summary><div class="mt-2 muted">Write def load(path: str | None = None) -&gt; bytes: when caller can omit it.</div></details>
+    </section>
+      <nav class="footer-nav"><a data-prev href="m02-syntax.html">Previous: M2</a><a data-next href="m04-data-structures.html">Next: M4</a></nav>
+    </article>
+    <aside class="toc panel"><div class="kicker mb-2">On this page</div><nav data-toc></nav></aside>
+  </main>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/prism.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-java.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-python.min.js"></script>
+<script src="../assets/course.js"></script>
+</body>
+</html>

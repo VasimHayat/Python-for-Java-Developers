@@ -1,0 +1,141 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Course Home | Python for Java Developers</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+  <script src="assets/tailwind-config.js"></script>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/themes/prism-tomorrow.min.css" rel="stylesheet">
+  <link href="assets/course.css" rel="stylesheet">
+</head>
+<body data-root="">
+<div class="shell">
+  <header class="topbar">
+    <div class="flex items-center gap-3">
+      <button class="icon-btn drawer-toggle" data-drawer aria-label="Open course navigation">Menu</button>
+      <a class="brand" href="index.html">Python<span> for Java</span></a>
+    </div>
+    <div class="flex items-center gap-3">
+      <span class="muted hidden sm:inline" data-progress-text></span>
+      <button class="icon-btn" data-theme aria-label="Toggle theme">Theme</button>
+    </div>
+  </header>
+  <div class="mobile-dim"></div>
+
+  <section class="hero">
+    <div class="hero-inner">
+      <div class="kicker">Beginner to expert</div>
+      <h1>Python for Java Developers</h1>
+      <p>A production-quality bridge course for senior Java and Spring Boot engineers who want Python without dragging Java reflexes into a different runtime, type system, and culture.</p>
+      <div class="progress-wrap mt-6 max-w-2xl"><div class="progress-bar" data-progress-bar></div></div>
+      <p class="muted mt-2" data-progress-text></p>
+    </div>
+  </section>
+  <main class="layout">
+    <aside class="sidebar panel">
+      <input class="search mb-3" data-search placeholder="Search modules and lessons">
+      <nav data-sidebar-list></nav>
+    </aside>
+    <section class="content">
+      <div class="flex items-center justify-between gap-4 mb-4">
+        <div><div class="kicker">Curriculum</div><h2 class="text-3xl font-bold">22 modules, Java mental model first</h2></div>
+      </div>
+      <div class="grid-map"><a class="module-card panel" data-module-card data-search="setup &amp; tooling runtime, repl, and project shape virtual environments and dependency metadata" href="modules/m01-setup.html">
+          <div class="module-num">M01</div><h2 class="text-xl font-bold mt-1">Setup &amp; Tooling</h2>
+          <p class="muted mt-2">Python is an interpreter-first runtime where the source file is the artifact you run.</p>
+        </a>
+<a class="module-card panel" data-module-card data-search="syntax &amp; execution model indentation, truthiness, and identity imports execute modules" href="modules/m02-syntax.html">
+          <div class="module-num">M02</div><h2 class="text-xl font-bold mt-1">Syntax &amp; Execution Model</h2>
+          <p class="muted mt-2">Python syntax removes braces but makes whitespace and object identity semantically visible.</p>
+        </a>
+<a class="module-card panel" data-module-card data-search="the type system gradual typing, not java typing with fewer keywords none is not optional" href="modules/m03-types.html">
+          <div class="module-num">M03</div><h2 class="text-xl font-bold mt-1">The Type System</h2>
+          <p class="muted mt-2">Type hints describe intent for tools; CPython does not enforce them at runtime.</p>
+        </a>
+<a class="module-card panel" data-module-card data-search="built-in data structures collections are protocols plus literals comprehensions beat most stream pipelines" href="modules/m04-data-structures.html">
+          <div class="module-num">M04</div><h2 class="text-xl font-bold mt-1">Built-in Data Structures</h2>
+          <p class="muted mt-2">Python&#x27;s core collections are built into the language&#x27;s syntax and idioms.</p>
+        </a>
+<a class="module-card panel" data-module-card data-search="control flow &amp; functions functions are first-class configuration defaults are evaluated once" href="modules/m05-functions.html">
+          <div class="module-num">M05</div><h2 class="text-xl font-bold mt-1">Control Flow &amp; Functions</h2>
+          <p class="muted mt-2">Python often passes behavior directly instead of manufacturing strategy classes.</p>
+        </a>
+<a class="module-card panel" data-module-card data-search="oop the python way classes without java ceremony properties replace getters and setters protocols and dunder methods class methods, static methods, and alternate constructors multiple inheritance and mro" href="modules/m06-oop.html">
+          <div class="module-num">M06</div><h2 class="text-xl font-bold mt-1">OOP the Python Way</h2>
+          <p class="muted mt-2">A Python class is a namespace plus behavior; it does not need fields declared up front.</p>
+        </a>
+<a class="module-card panel" data-module-card data-search="dataclasses, enums &amp; structured data structured records without pojo gravity naive translation vs pythonic design" href="modules/m07-dataclasses.html">
+          <div class="module-num">M07</div><h2 class="text-xl font-bold mt-1">Dataclasses, Enums &amp; Structured Data</h2>
+          <p class="muted mt-2">Structured records without POJO gravity</p>
+        </a>
+<a class="module-card panel" data-module-card data-search="modules, packages &amp; imports modules are files naive translation vs pythonic design" href="modules/m08-modules-packages.html">
+          <div class="module-num">M08</div><h2 class="text-xl font-bold mt-1">Modules, Packages &amp; Imports</h2>
+          <p class="muted mt-2">Modules are files</p>
+        </a>
+<a class="module-card panel" data-module-card data-search="errors &amp; exceptions exceptions are unchecked and idiomatic naive translation vs pythonic design" href="modules/m09-exceptions.html">
+          <div class="module-num">M09</div><h2 class="text-xl font-bold mt-1">Errors &amp; Exceptions</h2>
+          <p class="muted mt-2">Exceptions are unchecked and idiomatic</p>
+        </a>
+<a class="module-card panel" data-module-card data-search="iterators, generators &amp; context managers iteration is a protocol naive translation vs pythonic design" href="modules/m10-iterators.html">
+          <div class="module-num">M10</div><h2 class="text-xl font-bold mt-1">Iterators, Generators &amp; Context Managers</h2>
+          <p class="muted mt-2">Iteration is a protocol</p>
+        </a>
+<a class="module-card panel" data-module-card data-search="decorators decorators execute at definition time naive translation vs pythonic design" href="modules/m11-decorators.html">
+          <div class="module-num">M11</div><h2 class="text-xl font-bold mt-1">Decorators</h2>
+          <p class="muted mt-2">Decorators execute at definition time</p>
+        </a>
+<a class="module-card panel" data-module-card data-search="functional toolkit functional tools are sharp, but comprehensions are home base naive translation vs pythonic design" href="modules/m12-functional.html">
+          <div class="module-num">M12</div><h2 class="text-xl font-bold mt-1">Functional Toolkit</h2>
+          <p class="muted mt-2">Functional tools are sharp, but comprehensions are home base</p>
+        </a>
+<a class="module-card panel" data-module-card data-search="typing, deep structural typing is the interface bridge naive translation vs pythonic design" href="modules/m13-typing-deep.html">
+          <div class="module-num">M13</div><h2 class="text-xl font-bold mt-1">Typing, Deep</h2>
+          <p class="muted mt-2">Structural typing is the interface bridge</p>
+        </a>
+<a class="module-card panel" data-module-card data-search="concurrency &amp; parallelism the gil changes the thread bargain naive translation vs pythonic design" href="modules/m14-concurrency.html">
+          <div class="module-num">M14</div><h2 class="text-xl font-bold mt-1">Concurrency &amp; Parallelism</h2>
+          <p class="muted mt-2">The GIL changes the thread bargain</p>
+        </a>
+<a class="module-card panel" data-module-card data-search="async i/o async is cooperative i/o naive translation vs pythonic design" href="modules/m15-async-io.html">
+          <div class="module-num">M15</div><h2 class="text-xl font-bold mt-1">Async I/O</h2>
+          <p class="muted mt-2">Async is cooperative I/O</p>
+        </a>
+<a class="module-card panel" data-module-card data-search="metaprogramming metaprogramming powers the language naive translation vs pythonic design" href="modules/m16-metaprogramming.html">
+          <div class="module-num">M16</div><h2 class="text-xl font-bold mt-1">Metaprogramming</h2>
+          <p class="muted mt-2">Metaprogramming powers the language</p>
+        </a>
+<a class="module-card panel" data-module-card data-search="memory, performance &amp; the runtime cpython memory is reference counting plus cyclic gc naive translation vs pythonic design" href="modules/m17-runtime.html">
+          <div class="module-num">M17</div><h2 class="text-xl font-bold mt-1">Memory, Performance &amp; the Runtime</h2>
+          <p class="muted mt-2">CPython memory is reference counting plus cyclic GC</p>
+        </a>
+<a class="module-card panel" data-module-card data-search="testing pytest trims ceremony from tests naive translation vs pythonic design" href="modules/m18-testing.html">
+          <div class="module-num">M18</div><h2 class="text-xl font-bold mt-1">Testing</h2>
+          <p class="muted mt-2">pytest trims ceremony from tests</p>
+        </a>
+<a class="module-card panel" data-module-card data-search="packaging &amp; distribution wheels are the distribution unit naive translation vs pythonic design" href="modules/m19-packaging.html">
+          <div class="module-num">M19</div><h2 class="text-xl font-bold mt-1">Packaging &amp; Distribution</h2>
+          <p class="muted mt-2">Wheels are the distribution unit</p>
+        </a>
+<a class="module-card panel" data-module-card data-search="web backends fastapi and django are not spring clones naive translation vs pythonic design" href="modules/m20-web-backends.html">
+          <div class="module-num">M20</div><h2 class="text-xl font-bold mt-1">Web Backends</h2>
+          <p class="muted mt-2">FastAPI and Django are not Spring clones</p>
+        </a>
+<a class="module-card panel" data-module-card data-search="data &amp; numeric python vectorization is the capstone shift naive translation vs pythonic design" href="modules/m21-data-numeric.html">
+          <div class="module-num">M21</div><h2 class="text-xl font-bold mt-1">Data &amp; Numeric Python</h2>
+          <p class="muted mt-2">Vectorization is the capstone shift</p>
+        </a>
+<a class="module-card panel" data-module-card data-search="idioms, anti-patterns &amp; style pythonic style is design pressure naive translation vs pythonic design" href="modules/m22-idioms.html">
+          <div class="module-num">M22</div><h2 class="text-xl font-bold mt-1">Idioms, Anti-patterns &amp; Style</h2>
+          <p class="muted mt-2">Pythonic style is design pressure</p>
+        </a></div>
+    </section>
+    <aside class="toc panel"><div class="kicker mb-2">Course Tools</div><p class="muted">Search, completion tracking, copy buttons, and collapsible solutions run entirely in your browser through localStorage.</p></aside>
+  </main>
+</div>
+<script src="assets/course.js"></script>
+</body>
+</html>

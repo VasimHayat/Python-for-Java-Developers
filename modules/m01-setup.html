@@ -1,0 +1,101 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>M1. Setup &amp; Tooling | Python for Java Developers</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+  <script src="../assets/tailwind-config.js"></script>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/themes/prism-tomorrow.min.css" rel="stylesheet">
+  <link href="../assets/course.css" rel="stylesheet">
+</head>
+<body data-root="../">
+<div class="shell">
+  <header class="topbar">
+    <div class="flex items-center gap-3">
+      <button class="icon-btn drawer-toggle" data-drawer aria-label="Open course navigation">Menu</button>
+      <a class="brand" href="../index.html">Python<span> for Java</span></a>
+    </div>
+    <div class="flex items-center gap-3">
+      <span class="muted hidden sm:inline" data-progress-text></span>
+      <button class="icon-btn" data-theme aria-label="Toggle theme">Theme</button>
+    </div>
+  </header>
+  <div class="mobile-dim"></div>
+
+  <main class="layout">
+    <aside class="sidebar panel">
+      <input class="search mb-3" data-search placeholder="Search modules and lessons">
+      <nav data-sidebar-list></nav>
+    </aside>
+    <article class="content">
+      <div class="module-head">
+        <div class="kicker">Module 1</div>
+        <h1>Setup &amp; Tooling</h1>
+        <p class="muted">A Java-first bridge into the Python mental model, with runnable CPython 3.12 examples.</p>
+        <div class="progress-wrap mt-4"><div class="progress-bar" data-progress-bar></div></div>
+      </div>
+      <section class="lesson panel" id="lesson-1" data-lesson-id="m01-l1">
+      <div class="lesson-actions"><button class="complete-btn" data-complete type="button">Mark complete</button></div>
+      <h2>Runtime, REPL, and project shape</h2>
+      <p class="thesis">Python is an interpreter-first runtime where the source file is the artifact you run.</p>
+      <p class="muted">A Java build produces bytecode and a classpath. Python usually runs source directly on CPython, with bytecode caches as an implementation detail. The REPL is not a toy; it is a normal design and debugging surface. Treat a Python project as an importable package plus small command entry points, not a pile of scripts.</p>
+      <div class="compare"><div class="codebox java"><span class="chip">Java</span><pre><code class="language-java">// Maven/Gradle compile first, then run a class.
+public class App {
+    public static void main(String[] args) {
+        System.out.println(&quot;ready&quot;);
+    }
+}</code></pre></div><div class="codebox python"><span class="chip">Python</span><pre><code class="language-python"># app.py
+def main() -&gt; None:
+    print(&quot;ready&quot;)
+
+if __name__ == &quot;__main__&quot;:
+    main()</code></pre></div></div>
+      <div class="callout pythonic"><strong>Idiomatic Python</strong><div class="codebox python"><span class="chip">Python</span><pre><code class="language-python"># Run from the project root:
+# python -m app
+
+def normalize(name: str) -&gt; str:
+    return &quot; &quot;.join(name.split()).title()
+
+print(normalize(&quot;  ada   lovelace &quot;))</code></pre></div></div>
+      <div class="callout"><strong>Coming from Java:</strong> Unlearn the reflex that every executable needs a ceremony-heavy class. Python&#x27;s unit of reuse is the module; the class earns its place.</div>
+      <details><summary>Under the hood</summary><p class="mt-2 muted">CPython compiles source to bytecode before execution, but the .pyc cache is not a portability contract like JVM bytecode.</p></details>
+      <h3 class="font-bold mt-4">Exercises</h3>
+      <details><summary>Create a package layout</summary><div class="mt-2 muted">Create src/acme_tool/__init__.py and src/acme_tool/cli.py, then run it with python -m acme_tool.cli.</div></details><details><summary>Add a REPL-friendly function</summary><div class="mt-2 muted">Move work into a pure function and keep the __main__ block tiny.</div></details>
+    </section>
+<section class="lesson panel" id="lesson-2" data-lesson-id="m01-l2">
+      <div class="lesson-actions"><button class="complete-btn" data-complete type="button">Mark complete</button></div>
+      <h2>Virtual environments and dependency metadata</h2>
+      <p class="thesis">A venv is closer to a local toolchain plus dependency sandbox than to a Maven module.</p>
+      <p class="muted">Java developers expect the build tool to own dependency resolution. In Python, the interpreter environment matters too. Use a virtual environment per project, declare dependencies in pyproject.toml, and prefer python -m pip so pip targets the interpreter you mean.</p>
+      <div class="compare"><div class="codebox java"><span class="chip">Java</span><pre><code class="language-java">// build.gradle.kts
+dependencies {
+    implementation(&quot;org.postgresql:postgresql:42.7.4&quot;)
+}</code></pre></div><div class="codebox python"><span class="chip">Python</span><pre><code class="language-python"># pyproject.toml
+[project]
+name = &quot;service&quot;
+version = &quot;0.1.0&quot;
+dependencies = [&quot;psycopg[binary]&gt;=3.2&quot;]</code></pre></div></div>
+      <div class="callout pythonic"><strong>Idiomatic Python</strong><div class="codebox python"><span class="chip">Python</span><pre><code class="language-python"># Shell commands:
+# python -m venv .venv
+# .venv\Scripts\python -m pip install -e .
+# uv sync  # if the team standardizes on uv</code></pre></div></div>
+      <div class="callout"><strong>Coming from Java:</strong> Unlearn global installs. If you would not add a random jar to JAVA_HOME/lib, do not pip install into your system Python.</div>
+      
+      <h3 class="font-bold mt-4">Exercises</h3>
+      <details><summary>Explain python -m pip</summary><div class="mt-2 muted">It guarantees pip is executed by the selected interpreter, avoiding PATH confusion.</div></details><details><summary>Sketch Maven to Python mapping</summary><div class="mt-2 muted">Maven coordinates map loosely to project metadata plus wheel artifacts; repositories map to package indexes such as PyPI.</div></details>
+    </section>
+      <nav class="footer-nav"><span></span><a data-next href="m02-syntax.html">Next: M2</a></nav>
+    </article>
+    <aside class="toc panel"><div class="kicker mb-2">On this page</div><nav data-toc></nav></aside>
+  </main>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/prism.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-java.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-python.min.js"></script>
+<script src="../assets/course.js"></script>
+</body>
+</html>
